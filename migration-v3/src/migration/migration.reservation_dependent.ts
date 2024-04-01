@@ -25,20 +25,25 @@ export async function migrationsReservationDependent(postgres: DataSource, maria
   console.log(`To migration: ${countOld} - Size: ${Math.round(Buffer.byteLength(JSON.stringify(listOldDependent))/1024)} KB`)
 
   for (const old of listOldDependent) {
+    //pegando a lista com todas as reservas associadas a um determinaldo dependente(old)
     const reservationDependents = await repositoryOldReservationDependent.find({where: {dependent: old}})
     if (reservationDependents) {
       //const listOfReservationOld = await repositoryOldReservationDependent.find({where: {dependent: old}})
+
+      //pega o registro do dependente na tebal gues
       const guest = await repositoryGuest.findOne({where: {id: 100000 + Number(old.dependentId)}})
       if (guest == null) {
         console.log(`>> migrationsReservationDependent >>: old dependent id: ${old.dependentId} `)  
         continue
       };
+
+      //varre todas reservas que o dependente esta associado
       for (const reservation of reservationDependents){
         // const reservationOld = await repositoryOldReservation.findOne({where: { reservationId: reservation.reservationId }})
         // const newReservation = await repositoryReservation.findOne({where: {reservationPms: reservationOld.reservationPmsId}})
         const newReservation = await repositoryReservation.findOne({where: {id: reservation.reservationId}})
         //adicionar um controle de se ja exite o dependente associado, não adiciona outro
-        guest.reservations = [...guest.reservations||[], newReservation];
+        guest.reservations = [...(guest.reservations||[]), newReservation];
       }
       //guest.clientPmsId = null;
       try{
