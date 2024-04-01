@@ -21,7 +21,6 @@ export async function migrationsRegistration(postgres: DataSource, mariadb: Data
   
   const [listOldReservation, countOld] = await repositoryOldReservation
     .createQueryBuilder('reservation')
-    .where('reservation.reservationDate >= 2023-06-01')
     .getManyAndCount()
   console.log(`To migration: ${countOld} - Size: ${Math.round(Buffer.byteLength(JSON.stringify(listOldReservation))/1024)} KB`)
 
