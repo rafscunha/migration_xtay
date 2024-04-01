@@ -1,0 +1,13 @@
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+
+@Entity("checkin_media_content", { schema: "Xtay" })
+export class CheckinMediaContent {
+  @PrimaryGeneratedColumn({ type: "bigint", name: "id" })
+  id: string;
+
+  @Column("varchar", { name: "keyName", nullable: true, length: 255 })
+  keyName: string | null;
+
+  @Column("tinyint", { name: "type", nullable: true })
+  type: number | null;
+}

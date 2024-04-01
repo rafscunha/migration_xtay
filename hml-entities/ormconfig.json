@@ -1,0 +1,13 @@
+[
+  {
+    "name": "default",
+    "type": "postgres",
+    "host": "xtay-homolog.cbpzy1qlokdo.us-east-1.rds.amazonaws.com",
+    "port": 5432,
+    "username": "xtayhomolog",
+    "password": "nW52c76HS1kxGKsB",
+    "database": "",
+    "synchronize": false,
+    "entities": ["entities/*.js"]
+  }
+]
